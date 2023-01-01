@@ -1,7 +1,7 @@
-import { sum } from ".";
+import { sum } from '.';
 
-test("Test sum function", () => {
-  it("should test", () => {
-    expect(sum(1, 2)).toBe(3);
+describe('Test sum function', () => {
+  test('should test', () => {
+    expect(sum(1, 2)).toBe(3)
   });
-});
+})
