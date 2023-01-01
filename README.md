@@ -1,1 +1,1 @@
-# algorithm-bootcamp
+# mentoring-simple-webpack-starter
