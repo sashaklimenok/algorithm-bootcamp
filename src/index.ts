@@ -1,3 +1,3 @@
-import './main.scss';
-
-console.log('Hello IT-academy student 🚀');
+export const sum = (a: number, b: number) => {
+  return a + b;
+};
