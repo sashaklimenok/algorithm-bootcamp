@@ -1,12 +1,12 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 const PATHS = {
-  src: path.resolve(__dirname, './src'),
-  dist: path.resolve(__dirname, './dist'),
+  src: path.resolve(__dirname, "./src"),
+  dist: path.resolve(__dirname, "./dist"),
 };
 
 module.exports = {
@@ -14,20 +14,20 @@ module.exports = {
     paths: PATHS,
   },
   entry: {
-    app: PATHS.src,
+    app: PATHS.src + "/index.ts",
   },
   output: {
-    filename: 'js/[name].[hash].js',
+    filename: "js/[name].[hash].js",
     path: PATHS.dist,
-    publicPath: '/',
+    publicPath: "/",
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          name: 'vendors',
+          name: "vendors",
           test: /node_modules/,
-          chunks: 'all',
+          chunks: "all",
           enforce: true,
         },
       },
@@ -36,23 +36,28 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
       },
       {
         test: /\.(woff2?|ttf|eot)(\?v=\w+)?$/,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: 'assets/fonts/[name][ext]',
+          filename: "assets/fonts/[name][ext]",
         },
       },
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ["@babel/preset-env"],
           },
         },
       },
@@ -62,18 +67,18 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: { sourceMap: true },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: { sourceMap: true },
           },
         ],
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -82,15 +87,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${PATHS.src}/index.html`,
       filename: `${PATHS.dist}/index.html`,
-      inject: 'body',
+      inject: "body",
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css',
+      filename: "css/[name].[hash].css",
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: `${PATHS.src}/assets/images`, to: 'assets/images' },
-        { from: `${PATHS.src}/public`, to: '' },
+        { from: `${PATHS.src}/assets/images`, to: "assets/images" },
+        { from: `${PATHS.src}/public`, to: "" },
       ],
     }),
   ],
